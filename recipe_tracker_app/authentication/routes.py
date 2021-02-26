@@ -1,6 +1,6 @@
 from recipe_tracker_app import app, db, bcrypt, login
 from recipe_tracker_app.models import User
-from recipe_tracker_app.forms import Signup, Login
+from recipe_tracker_app.authentication.forms import Signup, Login
 from flask import Blueprint, request, render_template, url_for, redirect, flash
 from flask_login import login_user, logout_user, login_required, current_user
 
@@ -20,8 +20,8 @@ def signup():
             username = form.username.data,
             password = hashed_password
         )
-        db_sql.session.add(user)
-        db_sql.session.commit()
+        db.session.add(user)
+        db.session.commit()
 
         flash('Account created!')
         return redirect(url_for('authentication.login'))
