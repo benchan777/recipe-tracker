@@ -18,3 +18,14 @@ login.init_app(app)
 
 # Initialize database
 db = SQLAlchemy(app)
+
+# Blueprints
+from recipe_tracker_app.routes import main
+app.register_blueprint(main)
+
+fromn recipe_tracker_app.authentication.routes import authentication
+app.register_blueprint(authentication)
+
+# Create Database
+with app.app_context():
+    db.create_all()
