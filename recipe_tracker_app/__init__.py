@@ -1,4 +1,4 @@
-from recipe_tracker_app import Config
+from recipe_tracker_app.config import Config
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
@@ -23,7 +23,7 @@ db = SQLAlchemy(app)
 from recipe_tracker_app.routes import main
 app.register_blueprint(main)
 
-fromn recipe_tracker_app.authentication.routes import authentication
+from recipe_tracker_app.authentication.routes import authentication
 app.register_blueprint(authentication)
 
 # Create Database
