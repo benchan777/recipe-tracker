@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Sign Up
+{% endblock title %}
+
+{% block content %}
+
+<h1>Create new recipe</h1>
+
+<form action="/create_recipe" method="POST">
+    {{ form.csrf_token }}
+    <fieldset>
+        {{ form.category.label }}
+        {{ form.category }}
+        <ul>
+            {% for error in form.category.errors %}
+            <li class="error">
+                {{ error }}
+            </li>
+            {% endfor %}
+        </ul>
+
+        {{ form.instructions.label }}
+        {{ form.instructions }}
+        <ul>
+            {% for error in form.instructions.errors %}
+            <li class="error">
+                {{ error }}
+            </li>
+            {% endfor %}
+        </ul>
+
+        {{ form.submit }}
+    </fieldset>
+</form>
+
+{% endblock content %}
