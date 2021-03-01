@@ -8,7 +8,14 @@ Home
 <main>
 
     <body>
-        Welcome, {{ current_user.username }}!
+        Welcome, {{ user.username }}!
+
+        <h2>Your Recipes</h2>
+        <ul>
+            {% for recipe in recipes %}
+            <li>{{ recipe.name }}: {{ recipe.recipe }}</li>
+            {% endfor %}
+        </ul>
     </body>
 
 </main>
