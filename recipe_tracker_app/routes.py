@@ -17,8 +17,10 @@ def homepage():
 def profile(user_id):
     ''' User profile page '''
     user = User.query.filter_by(id = user_id).one()
-    recipes = Recipe.query.filter_by(id = user_id).all()
-    return render_template('profile.html', user = user, recipes = recipes)
+    recipes = Recipe.query.filter_by(creator_id = user_id).all()
+    ingredient_list = user.user_ingredients
+  
+    return render_template('profile.html', user = user, recipes = recipes, ingredient_list = ingredient_list)
 
 @main.route('/create_recipe', methods = ['GET', 'POST'])
 def create_recipe():
@@ -40,9 +42,10 @@ def create_recipe():
         
     return render_template('create_recipe.html', form = form)
 
-@main.route('/create_ingredient', methods = ['GET', 'POST'])
-def create_ingredient():
-    ''' Page to create new ingredients '''
+@main.route('/recipe_detail/<recipe_id>', methods = ['GET', 'POST'])
+def recipe_detail(recipe_id):
+    ''' Displays details of the recipe '''
+    recipe = Recipe.query.get(recipe_id)
     form = IngredientsForm()
 
     if form.validate_on_submit():
@@ -53,19 +56,13 @@ def create_ingredient():
         db.session.add(new_ingredient)
         db.session.commit()
 
+        ingredient = Ingredients.query.filter_by(name = form.name.data).one()
+        print(ingredient.name)
+        ingredient.users_with_ingredient.append(User.query.filter_by(id=current_user.id).one())
+        db.session.add(ingredient)
+        db.session.commit()
+
         flash('New ingredient added!')
-        return redirect(url_for('main.homepage'))
-        
-    return render_template('create_ingredient.html', form = form)
+        return redirect(url_for(f'main.recipe_detail', recipe_id = recipe.id))
 
-@main.route('/recipe_detail/<recipe_id>', methods = ['GET', 'POST'])
-def recipe_detail(recipe_id):
-    ''' Displays details of the recipe '''
-    recipe = Recipe.query.get(recipe_id)
-    # form = IngredientsForm(obj = recipe)
-
-    # if form.validate_on_submit():
-
-
-    return render_template('recipe_detail.html', recipe = recipe)
-
+    return render_template('recipe_detail.html', recipe = recipe, form = form)
