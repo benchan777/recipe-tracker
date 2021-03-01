@@ -9,7 +9,13 @@ Home
 
     <body>
         <a href="/create_recipe">Create Recipe</a>
-        <a href="/create_ingredient">Create Ingredient</a>
+
+        <div>
+            {% for recipe in saved_recipes %}
+            <p>{{ recipe.name }}</p>
+            <p>{{ recipe.recipe_type }}</p>
+            {% endfor %}
+        </div>
     </body>
 
 </main>

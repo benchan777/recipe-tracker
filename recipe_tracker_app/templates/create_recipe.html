@@ -11,6 +11,16 @@ Sign Up
 <form action="/create_recipe" method="POST">
     {{ form.csrf_token }}
     <fieldset>
+        {{ form.name.label }}
+        {{ form.name }}
+        <ul>
+            {% for error in form.category.errors %}
+            <li class="error">
+                {{ error }}
+            </li>
+            {% endfor %}
+        </ul>
+
         {{ form.category.label }}
         {{ form.category }}
         <ul>
