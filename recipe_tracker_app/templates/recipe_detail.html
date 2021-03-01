@@ -11,6 +11,33 @@ Recipe Details
 <p>Type: {{ recipe.recipe_type }}</p>
 <p>Instructions: {{ recipe.recipe }}</p>
 
+<h2>I</h2>
 
+<form action="/recipe_detail/{{ recipe.id }}" method="POST">
+    {{ form.csrf_token }}
+    <fieldset>
+        {{ form.name.label }}
+        {{ form.name }}
+        <ul>
+            {% for error in form.category.errors %}
+            <li class="error">
+                {{ error }}
+            </li>
+            {% endfor %}
+        </ul>
+
+        {{ form.category.label }}
+        {{ form.category }}
+        <ul>
+            {% for error in form.category.errors %}
+            <li class="error">
+                {{ error }}
+            </li>
+            {% endfor %}
+        </ul>
+
+        {{ form.submit }}
+    </fieldset>
+</form>
 
 {% endblock content %}
