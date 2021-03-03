@@ -20,11 +20,11 @@ login.init_app(app)
 db = SQLAlchemy(app)
 
 # Blueprints
-from recipe_tracker_app.routes import main
-app.register_blueprint(main)
+from recipe_tracker_app.routes import main as main_routes
+app.register_blueprint(main_routes)
 
-from recipe_tracker_app.authentication.routes import authentication
-app.register_blueprint(authentication)
+from recipe_tracker_app.authentication.routes import authentication as authentication_routes
+app.register_blueprint(authentication_routes)
 
 # Create Database
 with app.app_context():
