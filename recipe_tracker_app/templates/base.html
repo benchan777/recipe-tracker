@@ -20,6 +20,11 @@
             {% endif %}
         </div>
     </nav>
+
+    {% for message in get_flashed_messages() %}
+    <p>{{ message }}</p>
+    {% endfor %}
+
     {% block content %}{% endblock %}
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
