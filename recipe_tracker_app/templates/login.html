@@ -15,9 +15,7 @@ Log In
         {{ form.username }}
         <ul>
             {% for error in form.username.errors %}
-            <li class="error">
-                {{ error }}
-            </li>
+            <li class="error">{{ error }}</li>
             {% endfor %}
         </ul>
 
@@ -25,9 +23,7 @@ Log In
         {{ form.password }}
         <ul>
             {% for error in form.password.errors %}
-            <li class="error">
-                {{ error }}
-            </li>
+            <li class="error">{{ error }}</li>
             {% endfor %}
         </ul>
 
