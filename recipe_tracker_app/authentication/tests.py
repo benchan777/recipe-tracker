@@ -11,10 +11,9 @@ def new_user():
 
 # Tests
 class AuthTests(unittest.TestCase):
-    """Tests for authentication (login & signup)."""
+    ''' Authentication Tests '''
 
     def setUp(self):
-        """Executed prior to each test."""
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
         app.config['DEBUG'] = False
