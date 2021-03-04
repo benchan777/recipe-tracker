@@ -16,14 +16,25 @@ def login(client, username, password):
     ), follow_redirects = True)
 
 def create_recipe():
-    recipe = Recipe(
-        name = 'Tiramisu',
-        recipe = 'Tiramisu recipe here!',
-        recipe_type = 'DESSERT'
-    )
+    new_user()
+    login(self.app, username, password)
 
-    db.session.add(recipe)
-    db.session.commit()
+    recipe_data = {
+        'name': 'Tiramisu',
+        'instructions': 'Tiramisu recipe here!',
+        'category': 'DESSERT'
+    }
+
+    self.app.post('/create_recipe', data = recipe_data)
+
+    # recipe = Recipe(
+    #     name = 'Tiramisu',
+    #     recipe = 'Tiramisu recipe here!',
+    #     recipe_type = 'DESSERT'
+    # )
+
+    # db.session.add(recipe)
+    # db.session.commit()
 
 # Tests
 class MainTests(unittest.TestCase):
@@ -40,18 +51,40 @@ class MainTests(unittest.TestCase):
 
     def test_create_recipe(self):
         ''' Tests creation of new recipe '''
-        create_recipe()
         new_user()
         login(self.app, 'ben', 'password')
         
         data = {
             'name': 'Cookies',
-            'recipe': 'Cookies recipe here!',
-            'recipe_type': 
+            'instructions': 'Cookies recipe here!',
+            'category': 'DESSERT'
         }
 
         self.app.post('/create_recipe', data = data)
 
         new_recipe = Recipe.query.filter_by(name = 'Cookies').one()
         self.assertIsNotNone(new_recipe)
-        self.assertEqual(new_recipe.category, 'DESSERT')
+        self.assertEqual(new_recipe.recipe_type, 'DESSERT')
+
+    def test_create_ingredient(self):
+        ''' Tests creation of new ingredients '''
+        new_user()
+        login(self.app, 'ben', 'password')
+
+        recipe_data = {
+            'name': 'Tiramisu',
+            'instructions': 'Tiramisu recipe here!',
+            'category': 'DESSERT'
+        }
+
+        self.app.post('/create_recipe', data = recipe_data)
+
+        ingredients_data = {
+            'category': 'DAIRY',
+            'name': 'Milk'
+        }
+
+        self.app.post('/recipe_detail/1', data = ingredients_data)
+
+        response = self.app.get('/profile/1')
+        self.assertIn('Milk', response.get_data(as_text = True))
